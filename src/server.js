@@ -32,13 +32,13 @@ export const setupServer = () => {
     try {
       const { id } = req.params;
       const contact = await getContactById(id);
-      if (contact) {
-        res.status(200).json({
-          message: `Successfully found contact with id ${id}!`,
-          data: contact,
-        });
-        res.status(404).send({ message: 'Contact not found' });
+      if (!contact) {
+        return res.status(404).send({ message: 'Contact not found' });
       }
+      res.status(200).json({
+        message: `Successfully found contact with id ${id}!`,
+        data: contact,
+      });
     } catch (error) {
       console.error(error);
     }
