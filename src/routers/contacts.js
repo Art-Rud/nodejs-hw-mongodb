@@ -8,10 +8,23 @@ import {
   updateContactCtrl,
 } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { contactSchema, contactUpdateSchema } from '../validation/contact.js';
+import { validateBody } from '../middlewares/validateBody.js';
+import { isValidId } from '../middlewares/isValidID.js';
+
 const router = express.Router();
 router.get('/contacts', ctrlWrapper(getAllContactsCtrl));
-router.get('/contacts/:id', ctrlWrapper(getContactByIdCtrl));
-router.post('/contacts', ctrlWrapper(createContactCtrl));
-router.patch('/contacts/:id', ctrlWrapper(updateContactCtrl));
-router.delete('/contacts/:id', ctrlWrapper(deleteContactCtrl));
+router.get('/contacts/:id', isValidId, ctrlWrapper(getContactByIdCtrl));
+router.post(
+  '/contacts',
+  validateBody(contactSchema),
+  ctrlWrapper(createContactCtrl),
+);
+router.patch(
+  '/contacts/:id',
+  isValidId,
+  validateBody(contactUpdateSchema),
+  ctrlWrapper(updateContactCtrl),
+);
+router.delete('/contacts/:id', isValidId, ctrlWrapper(deleteContactCtrl));
 export default router;

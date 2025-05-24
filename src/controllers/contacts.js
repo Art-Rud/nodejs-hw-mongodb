@@ -6,9 +6,21 @@ import {
   getContactById,
   updateContact,
 } from '../services/contacts.js';
+import { paginationParams } from '../utils/paginationParams.js';
+import { sortParams } from '../utils/sortParams.js';
+import { filterParams } from '../utils/filterParams.js';
 
 export const getAllContactsCtrl = async (req, res) => {
-  const contacts = await getAllContacts();
+  const { page, perPage } = paginationParams(req.query);
+  const { sortBy, sortOrder } = sortParams(req.query);
+  const filter = filterParams(req.query);
+  const contacts = await getAllContacts({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+    filter,
+  });
   res.status(200).json({
     message: 'Successfully found contacts!',
     data: contacts,
