@@ -20,6 +20,7 @@ export const getAllContactsCtrl = async (req, res) => {
     sortBy,
     sortOrder,
     filter,
+    userId: req.user._id,
   });
   res.status(200).json({
     message: 'Successfully found contacts!',
@@ -32,6 +33,9 @@ export const getContactByIdCtrl = async (req, res) => {
   if (!contact) {
     throw new createHttpError(404, 'Contact not found');
   }
+  if (contact.userId.toString() !== req.user.id.toString()) {
+    throw createHttpError.NotFound('Contact not found');
+  }
   res.status(200).json({
     status: 200,
     message: `Successfully found contact with id ${id}!`,
@@ -39,7 +43,7 @@ export const getContactByIdCtrl = async (req, res) => {
   });
 };
 export const createContactCtrl = async (req, res) => {
-  const contact = await createContact(req.body);
+  const contact = await createContact({ ...req.body, userId: req.user.id });
   res.status(201).json({
     status: 201,
     message: 'Successfully created a contact!',

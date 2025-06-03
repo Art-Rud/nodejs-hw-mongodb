@@ -6,6 +6,7 @@ export const getAllContacts = async ({
   sortBy,
   sortOrder,
   filter,
+  userId,
 }) => {
   const skip = page > 0 ? (page - 1) * perPage : 0;
   const contactQuery = Contacts.find();
@@ -27,7 +28,7 @@ export const getAllContacts = async ({
   return {
     contacts,
     page,
-    perPage,
+    perPage: 20,
     totalItems,
     totalPages,
     hasPreviousPage: page > 1,
