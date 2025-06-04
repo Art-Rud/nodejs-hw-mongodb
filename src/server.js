@@ -23,7 +23,7 @@ export const setupServer = () => {
     }),
   );
   app.use('/auth', authRoute);
-  app.use(auth, contactRoute);
+  app.use('/contacts', auth, contactRoute);
   app.use(notFoundHandler);
   app.use(errorHandler);
 
