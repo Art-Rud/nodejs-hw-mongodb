@@ -1,8 +1,18 @@
+import Handlebars from 'handlebars';
+import * as fs from 'node:fs';
+import path from 'node:path';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import crypto from 'node:crypto';
 import createHttpError from 'http-errors';
 import { User } from '../models/user.js';
 import { Session } from '../models/session.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
+import { sendMail } from '../utils/sendMail.js';
+const RESET_PASSWORD = fs.readFileSync(
+  path.resolve('src', 'templates', 'reset-password.hbs'),
+  'utf-8',
+);
 export const registerUser = async (payload) => {
   const user = await User.findOne({ email: payload.email });
 
@@ -60,4 +70,66 @@ export const refreshSession = async (sessionId, refreshToken) => {
 };
 export const logoutUser = async (sessionId) => {
   await Session.deleteOne({ _id: sessionId });
+};
+export const reqResetPass = async (email) => {
+  const user = await User.findOne({ email });
+  if (user === null) {
+    throw new createHttpError.NotFound('User not found');
+  }
+
+  const token = jwt.sign(
+    {
+      sub: user._id,
+      name: user.name,
+    },
+    getEnvVar('JWT_SECRET'),
+    {
+      expiresIn: '15m',
+    },
+  );
+
+  const template = Handlebars.compile(RESET_PASSWORD);
+  try {
+    await sendMail(
+      user.email,
+      'Reset password',
+      template({
+        name: `${user.name}`,
+        link: `http://localhost:3000/reset-password/?token=${token}`,
+      }),
+    );
+  } catch (error) {
+    console.log(error);
+
+    throw createHttpError(
+      500,
+      'Failed to send the email, please try again later.',
+    );
+  }
+};
+export const resetPass = async (password, token) => {
+  try {
+    const decoded = jwt.verify(token, getEnvVar('JWT_SECRET'));
+
+    const user = await User.findById(decoded.sub);
+
+    if (!user) {
+      throw new createHttpError.NotFound('User not found');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await User.findByIdAndUpdate(user._id, { password: hashedPassword });
+    await Session.deleteOne({ userId: user._id });
+  } catch (error) {
+    if (
+      error.name === 'JsonWebTokenError' ||
+      error.name === 'TokenExpiredError'
+    ) {
+      throw new createHttpError.Unauthorized('Token is expired or invalid.');
+    }
+    console.log(error);
+
+    throw error;
+  }
 };

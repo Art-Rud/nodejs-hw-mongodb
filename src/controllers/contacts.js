@@ -1,4 +1,6 @@
 import createHttpError from 'http-errors';
+import * as fs from 'node:fs/promises';
+import path from 'node:path';
 import {
   createContact,
   deleteContact,
@@ -9,7 +11,29 @@ import {
 import { paginationParams } from '../utils/paginationParams.js';
 import { sortParams } from '../utils/sortParams.js';
 import { filterParams } from '../utils/filterParams.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
+import { uploadToCloudinary } from '../utils/uploadToCloudinary.js';
+const uploadHandlear = async (file) => {
+  if (!file) {
+    return null;
+  }
+  let photo = null;
 
+  if (getEnvVar('UPLOAD_TO_CLOUDINARY') === 'true') {
+    const result = await uploadToCloudinary(file.path);
+    await fs.unlink(file.path);
+
+    return (photo = result.secure_url);
+  } else {
+    await fs.rename(
+      file.path,
+      path.resolve('src', 'uploads', 'photos', file.filename),
+    );
+
+    photo = `http://localhost:8080/avatars/${file.filename}`;
+    return photo;
+  }
+};
 export const getAllContactsCtrl = async (req, res) => {
   const { page, perPage } = paginationParams(req.query);
   const { sortBy, sortOrder } = sortParams(req.query);
@@ -44,7 +68,12 @@ export const getContactByIdCtrl = async (req, res) => {
   });
 };
 export const createContactCtrl = async (req, res) => {
-  const contact = await createContact({ ...req.body, userId: req.user.id });
+  const photo = await uploadHandlear(req.file);
+  const contact = await createContact({
+    ...req.body,
+    userId: req.user.id,
+    photo,
+  });
   res.status(201).json({
     status: 201,
     message: 'Successfully created a contact!',
@@ -54,7 +83,11 @@ export const createContactCtrl = async (req, res) => {
 export const updateContactCtrl = async (req, res) => {
   const { contactId } = req.params;
   const { id: userId } = req.user;
-  const updatedContact = await updateContact(contactId, userId, req.body);
+  const photo = await uploadHandlear(req.file);
+  const updatedContact = await updateContact(contactId, userId, {
+    ...req.body,
+    photo: photo,
+  });
   if (!updatedContact) {
     throw new createHttpError(404, 'Contact not found');
   }

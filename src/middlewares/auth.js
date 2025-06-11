@@ -3,7 +3,7 @@ import createHttpError from 'http-errors';
 import { User } from '../models/user.js';
 import { Session } from '../models/session.js';
 
-export async function auth(req, res, next) {
+export const auth = async (req, res, next) => {
   const { authorization } = req.headers;
 
   if (typeof authorization !== 'string') {
@@ -39,4 +39,4 @@ export async function auth(req, res, next) {
   req.user = { id: user._id, name: user.name };
 
   next();
-}
+};
