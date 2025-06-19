@@ -1,0 +1,43 @@
+tags:
+  - Auth
+summary: Reset password
+operationId: resetPass
+description: Reset password
+security: []
+responses:
+  '200':
+    description: Reset password
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - password
+            - token
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Password has been successfully reset.
+  '401':
+    description: Unauthorized Error
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: Token is expired or invalid
+  '404':
+    $ref: ../../components/responses/404.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

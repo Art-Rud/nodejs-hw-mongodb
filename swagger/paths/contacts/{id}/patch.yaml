@@ -1,0 +1,78 @@
+tags:
+  - Contacts
+summary: Update contacts
+operationId: updateContact
+description: Update contacts
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: 684164740a83d714dfe66a01
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            minLength: 3
+            maxLength: 20
+            description: Contact name
+            example: Kateryna Kovalchuk
+          phoneNumber:
+            type: string
+            minLength: 3
+            maxLength: 20
+            description: Contact phone number
+            example: +3800000000010
+          email:
+            type: string
+            minLength: 3
+            maxLength: 20
+            description: Contact email
+            example: andriy7@example.com
+          isFavourite:
+            type: boolean
+            description: Favourite contacts
+            example: false
+          contactType:
+            type: string
+            description: Contact type
+            enum: ['work', 'home', 'personal']
+            example: personal
+          photo:
+            type: string
+            format: url
+            description: Url of contact photo
+            example: https://res.cloudinary.com/dnnpxetem/image/upload/v1749718911/veirmv446v7wttgmqxxv.jpg
+
+responses:
+  '201':
+    description: Contact update
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully updated a contact!
+            data:
+              $ref: ../../../components/schemas/contact.yaml
+
+  '404':
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml

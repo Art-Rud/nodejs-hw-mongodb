@@ -1,0 +1,34 @@
+type: object
+required:
+  - _id
+  - name
+  - email
+  - createdAt
+  - updatedAt
+properties:
+  _id:
+    type: string
+    description: User`s id
+    example: 68406392892f281e98de464a
+  name:
+    type: string
+    minLength: 3
+    maxLength: 20
+    description: User`s name
+    example: Kateryna Kovalchuk
+  email:
+    type: string
+    maxLength: 20
+    minLength: 3
+    description: User email
+    example: andriy7@example.com
+  createdAt:
+    type: string
+    format: date-time
+    description: User created at
+    example: 2025-03-27T19:43:21.686+00:00
+  updatedAt:
+    type: string
+    format: date-time
+    description: User updated at
+    example: 2025-03-28T19:43:21.686+00:00
