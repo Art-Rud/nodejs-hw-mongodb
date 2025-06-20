@@ -8,7 +8,6 @@ required:
   - hasNextPage
 properties:
   data:
-    type: array
     description: Array of contacts
     items:
       $ref: './contact.yaml'
