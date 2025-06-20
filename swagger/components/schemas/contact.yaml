@@ -10,6 +10,7 @@ required:
   - photo
   - createdAt
   - updatedAt
+
 properties:
   _id:
     type: string
@@ -42,7 +43,7 @@ properties:
     example: 684164740a83d714dfe66a01
   photo:
     type: string
-    format: url
+    format: binary
     description: Url of contact photo
     example: https://res.cloudinary.com/dnnpxetem/image/upload/v1749718911/veirmv446v7wttgmqxxv.jpg
   createdAt:

@@ -18,6 +18,30 @@ parameters:
     schema:
       type: integer
       example: 10
+  - name: totalItems
+    in: query
+    required: false
+    schema:
+      type: integer
+      example: 200
+  - name: totalPages
+    in: query
+    required: false
+    schema:
+      type: integer
+      example: 20
+  - name: hasPreviousPage
+    in: query
+    required: false
+    schema:
+      type: boolean
+      example: false
+  - name: hasNextPage
+    in: query
+    required: false
+    schema:
+      type: boolean
+      example: true
   - name: sortOrder
     in: query
     schema:
@@ -43,6 +67,7 @@ parameters:
       type: string
       enum: ['home', 'work', 'personal']
       example: home
+
 responses:
   '200':
     description: Get all contacts
@@ -62,7 +87,9 @@ responses:
               type: string
               example: Successfully found contacts!
             data:
-              $ref: ../../components/schemas/contact.yaml
+              type: array
+              $ref: ../../components/schemas/contacts.yaml
+
   '401':
     $ref: ../../components/responses/401.yaml
   '500':

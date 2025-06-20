@@ -47,7 +47,7 @@ requestBody:
 
           photo:
             type: string
-            format: url
+            format: binary
             description: Url of contact photo
             example: https://res.cloudinary.com/dnnpxetem/image/upload/v1749718911/veirmv446v7wttgmqxxv.jpg
 responses:

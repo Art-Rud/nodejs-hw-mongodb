@@ -61,6 +61,42 @@
             }
           },
           {
+            "name": "totalItems",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 200
+            }
+          },
+          {
+            "name": "totalPages",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "hasPreviousPage",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "example": false
+            }
+          },
+          {
+            "name": "hasNextPage",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "example": true
+            }
+          },
+          {
             "name": "sortOrder",
             "in": "query",
             "schema": {
@@ -127,7 +163,8 @@
                       "example": "Successfully found contacts!"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/contact"
+                      "type": "array",
+                      "$ref": "#/components/schemas/contacts"
                     }
                   }
                 }
@@ -205,7 +242,7 @@
                   },
                   "photo": {
                     "type": "string",
-                    "format": "url",
+                    "format": "binary",
                     "description": "Url of contact photo",
                     "example": "https://res.cloudinary.com/dnnpxetem/image/upload/v1749718911/veirmv446v7wttgmqxxv.jpg"
                   }
@@ -415,7 +452,7 @@
                   },
                   "photo": {
                     "type": "string",
-                    "format": "url",
+                    "format": "binary",
                     "description": "Url of contact photo",
                     "example": "https://res.cloudinary.com/dnnpxetem/image/upload/v1749718911/veirmv446v7wttgmqxxv.jpg"
                   }
@@ -932,7 +969,7 @@
           },
           "photo": {
             "type": "string",
-            "format": "url",
+            "format": "binary",
             "description": "Url of contact photo",
             "example": "https://res.cloudinary.com/dnnpxetem/image/upload/v1749718911/veirmv446v7wttgmqxxv.jpg"
           },
@@ -947,6 +984,56 @@
             "format": "date-time",
             "description": "Contact updated at",
             "example": "2025-03-28T19:43:21.686+00:00"
+          }
+        }
+      },
+      "contacts": {
+        "type": "object",
+        "required": [
+          "page",
+          "perPage",
+          "totalItems",
+          "totalPages",
+          "hasPreviousPage",
+          "hasNextPage"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "Array of contacts",
+            "items": {
+              "$ref": "#/components/schemas/contact"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "description": "Number of page",
+            "example": 2
+          },
+          "perPage": {
+            "type": "integer",
+            "description": "Count of contacts on one page",
+            "example": 10
+          },
+          "totalItems": {
+            "type": "integer",
+            "description": "Count of contacts with given parameters in DB",
+            "example": 200
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "Count of page with contacts with given parameters",
+            "example": 20
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "description": "Have this page the previous page?",
+            "example": false
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "description": "Have this page the next page?",
+            "example": true
           }
         }
       },
