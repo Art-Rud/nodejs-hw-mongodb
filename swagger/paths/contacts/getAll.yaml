@@ -87,7 +87,6 @@ responses:
               type: string
               example: Successfully found contacts!
             data:
-              type: array
               $ref: ../../components/schemas/contacts.yaml
 
   '401':
