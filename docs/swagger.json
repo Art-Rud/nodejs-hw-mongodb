@@ -1001,34 +1001,34 @@
             "type": "array",
             "description": "Array of contacts",
             "items": {
-              "$ref": "#/components/schemas/contact",
-              "example": [
-                {
-                  "_id": "68406392892f281e98de464a",
-                  "name": "Kateryna Kovalchuk",
-                  "phoneNumber": 3800000000010,
-                  "contactType": "home",
-                  "userId": "684164740a83d714dfe66a01",
-                  "createdAt": "2025-03-27T19:43:21.686+00:00",
-                  "updatedAt": "2025-03-28T19:43:21.686+00:00",
-                  "photo": "https://res.cloudinary.com/dnnpxetem/image/upload/v1749718911/veirmv446v7wttgmqxxv.jpg",
-                  "email": "andriy7@example.coma",
-                  "isFavourite": true
-                },
-                {
-                  "_id": "68406392892f281e98de464a",
-                  "name": "Kateryna Kovalchuk",
-                  "phoneNumber": 3800000000010,
-                  "contactType": "home",
-                  "userId": "684164740a83d714dfe66a01",
-                  "createdAt": "2025-03-27T19:43:21.686+00:00",
-                  "updatedAt": "2025-03-28T19:43:21.686+00:00",
-                  "photo": "https://res.cloudinary.com/dnnpxetem/image/upload/v1749718911/veirmv446v7wttgmqxxv.jpg",
-                  "email": "andriy7@example.coma",
-                  "isFavourite": true
-                }
-              ]
-            }
+              "$ref": "#/components/schemas/contact"
+            },
+            "example": [
+              {
+                "_id": "68406392892f281e98de464a",
+                "name": "Kateryna Kovalchuk",
+                "phoneNumber": 3800000000010,
+                "contactType": "home",
+                "userId": "684164740a83d714dfe66a01",
+                "createdAt": "2025-03-27T19:43:21.686+00:00",
+                "updatedAt": "2025-03-28T19:43:21.686+00:00",
+                "photo": "https://res.cloudinary.com/dnnpxetem/image/upload/v1749718911/veirmv446v7wttgmqxxv.jpg",
+                "email": "andriy7@example.coma",
+                "isFavourite": true
+              },
+              {
+                "_id": "68406392892f281e98de464a",
+                "name": "Kateryna Kovalchuk",
+                "phoneNumber": 3800000000010,
+                "contactType": "home",
+                "userId": "684164740a83d714dfe66a01",
+                "createdAt": "2025-03-27T19:43:21.686+00:00",
+                "updatedAt": "2025-03-28T19:43:21.686+00:00",
+                "photo": "https://res.cloudinary.com/dnnpxetem/image/upload/v1749718911/veirmv446v7wttgmqxxv.jpg",
+                "email": "andriy7@example.coma",
+                "isFavourite": true
+              }
+            ]
           },
           "page": {
             "type": "integer",
