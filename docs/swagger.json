@@ -61,63 +61,6 @@
             }
           },
           {
-            "name": "totalItems",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "example": 200
-            }
-          },
-          {
-            "name": "totalPages",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "example": 20
-            }
-          },
-          {
-            "name": "hasPreviousPage",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "example": false
-            }
-          },
-          {
-            "name": "hasNextPage",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "example": true
-            }
-          },
-          {
-            "name": "sortOrder",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ],
-              "example": "asc"
-            }
-          },
-          {
-            "name": "sortBy",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "contactType"
-            }
-          },
-          {
             "name": "isFavourite",
             "in": "query",
             "required": false,
